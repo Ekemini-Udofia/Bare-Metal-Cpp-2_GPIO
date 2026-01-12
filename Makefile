@@ -12,6 +12,7 @@ LDFLAGS = -mcpu=cortex-m0 --specs=nosys.specs "-Wl,-Map=build/build.map" "-Wl,--
 AS_FLAGS = -mcpu=cortex-m0 -mthumb -x assembler-with-cpp
 SRC_DIR = src
 OBJ_DIR = build/obj
+BIN_DIR = build/bin
 OBJS = \
 	$(OBJ_DIR)/startup_stm32f030f4px.o \
 	$(OBJ_DIR)/main.o
@@ -27,15 +28,18 @@ all: main.elf
 # Ensure OBJ_DIR exists
 $(OBJ_DIR) :
 	mkdir -p $(OBJ_DIR)
+# Ensure BIN_DIR exists
+$(BIN_DIR) :
+    mkdir -p $(BIN_DIR)
 
 $(OBJ_DIR)/main.o : $(SRC_DIR)/main.cpp
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 $(OBJ_DIR)/startup_stm32f030f4px.o : startup/startup_stm32f030f4px.s
-	$(AS) $(AS_FLAGS) $^ -o $@
+	$(AS) $(AS_FLAGS) $^ -c -o $@
 
 main.elf : $(OBJS)
-	$(CXX) $(LDFLAGS) -T$(LD_SCRIPT) $^ -o main.elf
+	$(CXX) $(LDFLAGS) -T$(LD_SCRIPT) $^ -o $(BIN_DIR)/main.elf
 
 clean :
 	rm $(OBJ_DIR)/*.o
