@@ -36,7 +36,7 @@ jobs:
       # 5. Compile main source
       - name: Compile main.cpp
         run: |
-          arm-none-eabi-g++ "src/main.cpp" -mcpu=cortex-m0 -std=c++11 \
+          arm-none-eabi-g++ "src/main.cpp" -I. -mcpu=cortex-m0 -std=c++11 \
             -DSTM32 -DSTM32F0 -DSTM32F030F4Px -c -Os -ffunction-sections -Wall -fstack-usage \
             -MMD -MP -MF"build/obj/main.d" --specs=nano.specs -mfloat-abi=soft -mthumb \
             -o "build/obj/main.o"
