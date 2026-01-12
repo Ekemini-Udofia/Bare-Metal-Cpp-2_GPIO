@@ -26,12 +26,12 @@ LD_SCRIPT = STM32F030F4PX_FLASH.ld
 all: main.elf
 
 # Ensure OBJ_DIR exists
-$(OBJ_DIR):
-    mkdir -p $(OBJ_DIR)
+$(OBJ_DIR) :
+	mkdir -p $(OBJ_DIR)
 
 # Ensure BIN_DIR exists
 $(BIN_DIR) :
-    mkdir -p $(BIN_DIR)
+	mkdir -p $(BIN_DIR)
 
 $(OBJ_DIR)/main.o : $(SRC_DIR)/main.cpp
 	$(CXX) $(CXXFLAGS) $^ -o $@
@@ -43,4 +43,4 @@ main.elf : $(OBJS)
 	$(CXX) $(LDFLAGS) -T$(LD_SCRIPT) $^ -o $(BIN_DIR)/main.elf
 
 clean :
-    $(OBJ_DIR)/*.o
+	$(OBJ_DIR)/*.o
