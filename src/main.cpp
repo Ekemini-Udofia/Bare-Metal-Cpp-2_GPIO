@@ -1,22 +1,4 @@
-// Define base address for peripherals
-#define PERIPH_BASE (0x40000000UL)
-// Offset for AHB2 - Contains GPIOA
-#define AHB2PERIHP_OFFSET (0x08000000UL)
-// Base address for AHB1
-#define AHB2PERIHP_BASE (PERIPH_BASE + AHB2PERIHP_OFFSET)
-// Offset for GPIOA
-#define GPIOA_OFFSET (0X0000UL)
-// Base address for GPIOA
-#define GPIOA_BASE (AHB2PERIHP_BASE + GPIOA_OFFSET)
-
-// Offset for AHB1 - Contains RCC
-#define AHB1PERIHP_OFFSET (0x00020000UL)
-// Base address for AHB1
-#define AHB1PERIHP_BASE (PERIPH_BASE + AHB1PERIHP_OFFSET)
-// Offset for RCC
-#define RCC_OFFSET (0x00001000UL)
-// Base for RCC
-#define RCC_BASE (AHB1PERIHP_BASE + RCC_OFFSET)
+#include <stm32f030f4_regs.hpp>
 
 // Define AHBENR offset
 #define RCC_AHBENR_OFFSET (0x14UL)
