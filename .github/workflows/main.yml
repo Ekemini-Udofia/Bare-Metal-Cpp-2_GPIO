@@ -2,63 +2,33 @@ name: Bare-Metal ARM CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout source
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Install ARM GCC toolchain via Marketplace action
-      - name: arm-none-eabi-gcc
+      - name: Install arm-none-eabi-gcc
         uses: fiam/arm-none-eabi-gcc@v1
         with:
-          release: '9-2019-q4'   # ARM GCC release version
+          release: "9-2019-q4"
 
-      # 3. Prepare build folders
-      - name: Prepare build folders
-        run: mkdir -p build/obj
+      # Build (fresh runner, no need to clean)
+      - name: Build firmware
+        run: make -j4 all
 
-      # 4. Assemble startup file
-      - name: Assemble startup
-        run: |
-          arm-none-eabi-g++ -mcpu=cortex-m0 -c -x assembler-with-cpp \
-            -MMD -MF"build/obj/startup_stm32f030f4px.d" -MT"build/obj/startup_stm32f030f4px.o" \
-            --specs=nano.specs -mfloat-abi=soft -mthumb \
-            -o "build/obj/startup_stm32f030f4px.o" "startup/startup_stm32f030f4px.s"
-
-      # 5. Compile main source
-      - name: Compile main.cpp
-        run: |
-          arm-none-eabi-g++ "src/main.cpp" -I. -mcpu=cortex-m0 -std=c++11 \
-            -DSTM32 -DSTM32F0 -DSTM32F030F4Px -c -Os -ffunction-sections -Wall -fstack-usage \
-            -MMD -MP -MF"build/obj/main.d" --specs=nano.specs -mfloat-abi=soft -mthumb \
-            -o "build/obj/main.o"
-
-      # 6. Link into ELF
-      - name: Link ELF
-        run: |
-          arm-none-eabi-g++ -o "build/build.elf" \
-            "build/obj/main.o" "build/obj/startup_stm32f030f4px.o" \
-            -mcpu=cortex-m0 -T"STM32F030F4PX_FLASH.ld" --specs=nosys.specs \
-            -Wl,-Map=build/build.map -Wl,--gc-sections -static --specs=nano.specs \
-            -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
-
-      # 7. Check ELF size
       - name: Check ELF size
         run: arm-none-eabi-size build/build.elf
 
-      # 8. Dump ELF sections
       - name: Dump ELF sections
         run: arm-none-eabi-objdump -h -s build/build.elf
 
-      # 9. Upload ELF artifact
       - name: Upload ELF artifact
         uses: actions/upload-artifact@v4
         with:
