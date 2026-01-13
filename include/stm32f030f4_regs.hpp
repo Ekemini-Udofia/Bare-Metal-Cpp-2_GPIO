@@ -1,3 +1,6 @@
+#ifndef INC_REGS_HPP_
+#define INC_REGS_HPP_
+
 #include <cstdint>
 
 typedef struct {
@@ -43,3 +46,6 @@ typedef struct {
 #define ODR_OFFSET (0x14UL)
 // Address for GPIOA_ODR
 #define GPIOA_ODR (*(volatile unsigned int *)(GPIOA_BASE + ODR_OFFSET))
+
+
+#endif // INC_REGS_HPP_

@@ -1,4 +1,4 @@
-#include <gpio.hpp>
+#include <gpio_output_driver.hpp>
 
 // Bit mask for enabling GPIOA - Bit 17
 #define GPIOAEN (1U << 17)
