@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
@@ -20,6 +20,7 @@ jobs:
           release: "9-2019-q4"
 
       - name: Build firmware
+        shell: bash
         run: make all
 
       - name: Check ELF size

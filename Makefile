@@ -26,13 +26,9 @@ LD_SCRIPT = STM32F030F4PX_FLASH.ld
 
 all: $(BIN_DIR)/main.elf
 
-# Ensure OBJ_DIR exists
-$(OBJ_DIR) :
-	mkdir -p $(OBJ_DIR)
-
-# Ensure BIN_DIR exists
-$(BIN_DIR) :
-	mkdir -p $(BIN_DIR)
+# Ensure Build dirs exist
+$(OBJ_DIR) $(BIN_DIR):
+	@if not exist "$@" mkdir "$@"
 
 $(OBJ_DIR)/main.o : $(SRC_DIR)/main.cpp | $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) $^ -o $@
