@@ -1,6 +1,7 @@
 # Prototype
 # $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 # 	$(CC) $(CFLAGS) $^ -o $@
+SHELL := bash
 
 CC = arm-none-eabi-gcc
 CXX = arm-none-eabi-g++

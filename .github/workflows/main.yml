@@ -20,15 +20,15 @@ jobs:
           release: "9-2019-q4"
 
       - name: Build firmware
-        shell: bash
+        shell: powershell
         run: make all
 
       - name: Check ELF size
-        shell: bash
+        shell: powershell
         run: arm-none-eabi-size build/bin/main.elf
 
       - name: Dump ELF sections
-        shell: bash
+        shell: powershell
         run: arm-none-eabi-objdump -h -s build/bin/main.elf
 
       - name: Upload ELF artifact
