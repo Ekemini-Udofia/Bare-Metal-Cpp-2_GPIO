@@ -21,7 +21,7 @@ jobs:
 
       # Build (fresh runner, no need to clean)
       - name: Build firmware
-        run: make -j4 all
+        run: make -B all
 
       - name: Check ELF size
         run: arm-none-eabi-size build/build.elf
