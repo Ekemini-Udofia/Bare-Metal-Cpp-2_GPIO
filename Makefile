@@ -28,11 +28,11 @@ all: $(BIN_DIR)/main.elf
 
 # Ensure OBJ_DIR exists
 $(OBJ_DIR) :
-	mkdir $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)
 
 # Ensure BIN_DIR exists
 $(BIN_DIR) :
-	mkdir $(BIN_DIR)
+	mkdir -p $(BIN_DIR)
 
 $(OBJ_DIR)/main.o : $(SRC_DIR)/main.cpp | $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) $^ -o $@
