@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
@@ -19,14 +19,16 @@ jobs:
         with:
           release: "9-2019-q4"
 
-      # Build (fresh runner, no need to clean)
       - name: Build firmware
+        shell: bash
         run: make all
 
       - name: Check ELF size
+        shell: bash
         run: arm-none-eabi-size build/build.elf
 
       - name: Dump ELF sections
+        shell: bash
         run: arm-none-eabi-objdump -h -s build/build.elf
 
       - name: Upload ELF artifact
