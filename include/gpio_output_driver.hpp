@@ -7,4 +7,4 @@ void led_init(void);
 void led_on(void);
 void led_off(void);
 
-#endif // INC_GPIO_OUTPUT_DRIVER_HPP_
+#endif  // INC_GPIO_OUTPUT_DRIVER_HPP_

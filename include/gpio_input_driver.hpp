@@ -6,5 +6,4 @@
 void btn_init(void);
 bool get_button_state(void);
 
-
-#endif // INC_GPIO_INPUT_DRIVER_HPP_
+#endif  // INC_GPIO_INPUT_DRIVER_HPP_

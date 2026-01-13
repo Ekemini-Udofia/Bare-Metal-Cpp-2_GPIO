@@ -1,6 +1,5 @@
 #include <Headers.hpp>
 
-
 int main(void) {
   // Initialize LED and button on PB3
   led_init();
@@ -11,9 +10,9 @@ int main(void) {
   while (1) {
     button_state = get_button_state();
     if (button_state) {
-        led_on();
+      led_on();
     } else {
-        led_off();
+      led_off();
     }
   }
 }

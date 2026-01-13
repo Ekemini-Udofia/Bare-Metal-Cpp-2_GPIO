@@ -47,5 +47,4 @@ typedef struct {
 // Address for GPIOA_ODR
 #define GPIOA_ODR (*(volatile unsigned int *)(GPIOA_BASE + ODR_OFFSET))
 
-
-#endif // INC_REGS_HPP_
+#endif  // INC_REGS_HPP_
