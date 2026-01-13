@@ -24,14 +24,14 @@ jobs:
 
       - name: Check ELF size
         shell: bash
-        run: arm-none-eabi-size build/build.elf
+        run: arm-none-eabi-size build/bin/main.elf
 
       - name: Dump ELF sections
         shell: bash
-        run: arm-none-eabi-objdump -h -s build/build.elf
+        run: arm-none-eabi-objdump -h -s build/bin/main.elf
 
       - name: Upload ELF artifact
         uses: actions/upload-artifact@v4
         with:
           name: stm32-build
-          path: build/build.elf
+          path: build/main.elf
