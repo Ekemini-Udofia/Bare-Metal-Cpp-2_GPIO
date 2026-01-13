@@ -13,10 +13,13 @@ AS_FLAGS = -mcpu=cortex-m0 -mthumb -x assembler-with-cpp -c
 SRC_DIR = src
 OBJ_DIR = build/obj
 BIN_DIR = build/bin
-OBJS = \
-	$(OBJ_DIR)/startup_stm32f030f4px.o \
-	$(OBJ_DIR)/main.o \
-	$(OBJ_DIR)/gpio.o
+
+CPP_SRCS := $(wildcard $(SRC_DIR)/*.cpp)
+ASM_SRCS := $(wildcard startup/*.s)
+
+OBJS := \
+	$(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(CPP_SRCS)) \
+	$(patsubst startup/%.s,$(OBJ_DIR)/%.o,$(ASM_SRCS))
 
 LD_SCRIPT = STM32F030F4PX_FLASH.ld
 
@@ -34,11 +37,8 @@ $(OBJ_DIR) :
 $(BIN_DIR) :
 	mkdir -p $(BIN_DIR)
 
-$(OBJ_DIR)/main.o : $(SRC_DIR)/main.cpp | $(OBJ_DIR)
-	$(CXX) $(CXXFLAGS) $^ -o $@
-
-$(OBJ_DIR)/gpio.o : $(SRC_DIR)/gpio.cpp | $(OBJ_DIR)
-	$(CXX) $(CXXFLAGS) $^ -o $@
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
+	$(CXX) $(CXXFLAGS) $< -o $@
 
 $(OBJ_DIR)/startup_stm32f030f4px.o : startup/startup_stm32f030f4px.s | $(OBJ_DIR)
 	$(AS) $(AS_FLAGS) $^ -o $@
