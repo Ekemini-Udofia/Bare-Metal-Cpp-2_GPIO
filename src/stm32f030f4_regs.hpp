@@ -27,3 +27,19 @@ typedef struct {
 #define GPIOA ((GPIO_TypeDef *)GPIOA_BASE)
 #define GPIOB ((GPIO_TypeDef *)GPIOB_BASE)
 
+// Define AHBENR offset
+#define RCC_AHBENR_OFFSET (0x14UL)
+// Define AHBENR address
+#define RCC_AHBENR                       \
+  (*(volatile unsigned int *)(RCC_BASE + \
+                              RCC_AHBENR_OFFSET))  // GPIOA_EN is on bit 17
+
+// Define GPIOA_MODER offset
+#define MODER_OFFSET (0x0000UL)
+// Define GPIOA_MODER
+#define GPIOA_MODER (*(volatile unsigned int *)(GPIOA_BASE + MODER_OFFSET))
+
+// Offset for the output data register
+#define ODR_OFFSET (0x14UL)
+// Address for GPIOA_ODR
+#define GPIOA_ODR (*(volatile unsigned int *)(GPIOA_BASE + ODR_OFFSET))
