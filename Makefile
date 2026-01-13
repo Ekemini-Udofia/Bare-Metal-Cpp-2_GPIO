@@ -24,27 +24,23 @@ LD_SCRIPT = STM32F030F4PX_FLASH.ld
 
 .PHONY : all clean
 
-all: main.elf
+all: $(BIN_DIR)/main.elf
 
-# Ensure OBJ_DIR exists
-$(OBJ_DIR) :
-	mkdir -p $(OBJ_DIR)
+# Ensure Build dirs exist
+$(OBJ_DIR) $(BIN_DIR):
+	@if not exist "$@" mkdir "$@"
 
-# Ensure BIN_DIR exists
-$(BIN_DIR) :
-	mkdir -p $(BIN_DIR)
-
-$(OBJ_DIR)/main.o : $(SRC_DIR)/main.cpp
+$(OBJ_DIR)/main.o : $(SRC_DIR)/main.cpp | $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-$(OBJ_DIR)/gpio.o : $(SRC_DIR)/gpio.cpp
+$(OBJ_DIR)/gpio.o : $(SRC_DIR)/gpio.cpp | $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
-$(OBJ_DIR)/startup_stm32f030f4px.o : startup/startup_stm32f030f4px.s
+$(OBJ_DIR)/startup_stm32f030f4px.o : startup/startup_stm32f030f4px.s | $(OBJ_DIR)
 	$(AS) $(AS_FLAGS) $^ -o $@
 
-main.elf : $(OBJS)
-	$(CXX) $(LDFLAGS) -T$(LD_SCRIPT) $^ -o $(BIN_DIR)/main.elf
+$(BIN_DIR)/main.elf : $(OBJS) | $(BIN_DIR)
+	$(CXX) $(LDFLAGS) -T$(LD_SCRIPT) $^ -o $@
 
 clean :
-	$(OBJ_DIR)/*.o
+	rm build
